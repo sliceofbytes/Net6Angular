@@ -9,13 +9,16 @@ namespace WisconsinCE.Controllers
         private static readonly string[] Summaries = new[]
         {
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
+        };
+
+        private readonly IWebHostEnvironment _env;
 
         private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IWebHostEnvironment env)
         {
             _logger = logger;
+            _env = env;
         }
 
         [HttpGet]
@@ -28,6 +31,25 @@ namespace WisconsinCE.Controllers
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)]
             })
             .ToArray();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UploadFile(IFormFile file)
+        {
+            string contentRootPath = _env.WebRootPath;
+            var filePath = Path.Combine(_env.ContentRootPath,"files", file.FileName);
+
+  
+            using (Stream fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(fileStream);
+                return Ok();
+            }
+
+
+       
+
+            
         }
     }
 }

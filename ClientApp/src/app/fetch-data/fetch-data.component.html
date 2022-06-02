@@ -4,7 +4,14 @@
 
 <p *ngIf="!forecasts"><em>Loading...</em></p>
 
-<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="forecasts">
+
+<div class="form-group">
+  <label for="file">Upload a File</label>
+  <input type="file" id="file" (change)="onFileUpload($any($event?.target).files)">
+</div>
+
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="forecasts" style="display:none;">
   <thead>
     <tr>
       <th>Date</th>

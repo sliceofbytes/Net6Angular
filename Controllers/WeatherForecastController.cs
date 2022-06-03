@@ -34,15 +34,15 @@ namespace WisconsinCE.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UploadFile(IFormFile file)
+        public async Task<IActionResult> UploadFile([FromForm] Document doc)
         {
             string contentRootPath = _env.WebRootPath;
-            var filePath = Path.Combine(_env.ContentRootPath,"files", file.FileName);
+            var filePath = Path.Combine(_env.ContentRootPath,"files", doc.Name);
 
   
             using (Stream fileStream = new FileStream(filePath, FileMode.Create))
             {
-                await file.CopyToAsync(fileStream);
+                await doc.File.CopyToAsync(fileStream);
                 return Ok();
             }
 

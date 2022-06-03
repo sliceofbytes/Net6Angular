@@ -10,6 +10,7 @@ export class FetchDataComponent {
 
   file: File | null = null;
   baseUrl: string = '';
+  fileName: string = '';
 
 
   constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
@@ -24,6 +25,7 @@ export class FetchDataComponent {
     this.file = files.item(0);
     const form: FormData = new FormData();
     form.append('file', this?.file as Blob, this.file?.name);
+    form.append('name', this.fileName);
     this.http.post(this.baseUrl + 'weatherforecast', form).subscribe((response) => {
       alert('success');
     }, (error) => {

@@ -8,6 +8,7 @@
 <div class="form-group">
   <label for="file">Upload a File</label>
   <input type="file" id="file" (change)="onFileUpload($any($event?.target).files)">
+  <input type="text" id="fileName" [(ngModel)] ="fileName" placeholder="Enter File Name" />
 </div>
 
 
